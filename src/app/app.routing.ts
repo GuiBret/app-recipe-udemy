@@ -8,8 +8,12 @@ import { SelectRecipeWarningComponent } from './select-recipe-warning/select-rec
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipesResolverService } from './shared/recipes-resolver.service';
 import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './auth/auth.guard';
 const routes: Routes = [
-    {path: 'recipe-list', component: RecipeBookComponent, children: [
+    {path: 'recipe-list',
+     canActivate: [AuthGuard],
+     component: RecipeBookComponent,
+     children: [
         { path: '', component: SelectRecipeWarningComponent, pathMatch: 'full'},
         { path: 'new', component: RecipeEditComponent, },
 
