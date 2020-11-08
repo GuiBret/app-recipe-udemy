@@ -82,11 +82,24 @@ export class AuthService {
     const user = new User(email, userId, token, expDate);
 
     this.user.next(user);
+    localStorage.setItem('userData', JSON.stringify(user));
   }
 
   logout() {
     this.user.next(null);
 
     this.router.navigate(['/auth']);
+  }
+
+  autoLogin() {
+    if(localStorage.getItem('userData')) {
+      const userData: {email: string, id: string, _token: string, _tokenExpiration: Date} = JSON.parse(localStorage.getItem('userData'));
+      const genUser = new User(userData.email, userData.id, userData._token, userData._tokenExpiration);
+      // Check exp date
+      if(genUser.token) {
+        console.log('autologin works');
+        this.user.next(genUser);
+      }
+    }
   }
 }
