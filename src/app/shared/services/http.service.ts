@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Recipe } from 'src/app/RecipeBook/recipe.model';
 import { RecipesService } from 'src/app/RecipeBook/recipes.service';
-import { map, tap } from 'rxjs/operators';
+import { exhaustMap, map, take, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 @Injectable({
@@ -19,15 +19,25 @@ export class HttpService {
   }
 
   fetchRecipes() {
-    return this.http.get<Recipe[]>('https://udemy-project-9f32b.firebaseio.com/recipes.json')
-             .pipe(
-               map((recipes: Array<Recipe>) => {
-                  return recipes.map((recipe) => {
-                    return {...recipe, ingredients: (recipe.ingredients) ? recipe.ingredients : []};
-                  });
-             }), tap(recipes => {
-              this.recipeService.setRecipes(recipes);
-             }));
+    return this.authSvc.user.pipe(
+      take(1),
+      exhaustMap(user => {
+        return this.http.get<Recipe[]>('https://udemy-project-9f32b.firebaseio.com/recipes.json',
+        {
+          params: new HttpParams().set('auth', user.token)
+        });
+
+
+      }))
+      .pipe(
+        map((recipes: Array<Recipe>) => {
+           return recipes.map((recipe) => {
+             return {...recipe, ingredients: (recipe.ingredients) ? recipe.ingredients : []};
+           });
+        }), tap(recipes => {
+            this.recipeService.setRecipes(recipes);
+      }));
+
 
 
 
