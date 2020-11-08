@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService, AuthResponseData } from './auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-
+import { AppAlertComponent } from '../shared/alert/alert.component';
+import { PlaceholderDirective } from '../placeholder/placeholder.directive';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html'
@@ -14,7 +15,9 @@ export class AuthComponent {
   isLoading = false;
   error: string = null;
 
-  constructor(private authSvc: AuthService, private router: Router) {}
+  @ViewChild(PlaceholderDirective, {static: false}) placeholderHost: PlaceholderDirective;
+
+  constructor(private authSvc: AuthService, private router: Router, private cfr: ComponentFactoryResolver) {}
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode
   }
@@ -39,7 +42,8 @@ export class AuthComponent {
     }, (errorMessage) => {
 
       this.isLoading = false;
-      this.error = errorMessage;
+
+      this.showErrorAlert(errorMessage);
 
     });
     form.reset();
@@ -47,5 +51,14 @@ export class AuthComponent {
 
   onHandleError() {
     this.error = '';
+  }
+
+  private showErrorAlert(errorMessage: string) {
+    const alertCmpFactory = this.cfr.resolveComponentFactory(AppAlertComponent);
+    const hostViewContainer = this.placeholderHost.viewContainerRef;
+
+    hostViewContainer.clear();
+
+    hostViewContainer.createComponent(alertCmpFactory);
   }
 }

@@ -21,6 +21,7 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { ShoppingService } from './ShoppingList/shopping.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AppAlertComponent } from './shared/alert/alert.component';
+import { PlaceholderDirective } from './placeholder/placeholder.directive';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AppAlertComponent } from './shared/alert/alert.component';
     RecipeEditComponent,
     AuthComponent,
     LoadingSpinnerComponent,
-    AppAlertComponent
+    AppAlertComponent,
+    PlaceholderDirective
   ],
   imports: [
     BrowserModule,
