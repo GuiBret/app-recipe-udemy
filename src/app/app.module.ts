@@ -9,7 +9,15 @@ import { RecipeListComponent } from './RecipeBook/recipe-list/recipe-list.compon
 import { RecipeItemComponent } from './RecipeBook/recipe-item/recipe-item.component';
 import { RecipeDetailComponent } from './RecipeBook/recipe-detail/recipe-detail.component';
 import { HeaderComponent } from './header/header.component';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DropdownDirective } from './shared/dropdown.directive';
+import { RecipesService } from './RecipeBook/recipes.service';
+import { AppRoutingModule } from './app.routing';
+import { SelectRecipeWarningComponent } from './select-recipe-warning/select-recipe-warning.component';
+import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthComponent } from './auth/auth.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -21,12 +29,21 @@ import { HeaderComponent } from './header/header.component';
     RecipeDetailComponent,
     HeaderComponent,
     ShoppingListComponent,
-    RecipeBookComponent
+    RecipeBookComponent,
+    DropdownDirective,
+    SelectRecipeWarningComponent,
+    RecipeEditComponent,
+    AuthComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [RecipesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
