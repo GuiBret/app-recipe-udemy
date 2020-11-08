@@ -19,16 +19,7 @@ export class HttpService {
   }
 
   fetchRecipes() {
-    return this.authSvc.user.pipe(
-      take(1),
-      exhaustMap(user => {
-        return this.http.get<Recipe[]>('https://udemy-project-9f32b.firebaseio.com/recipes.json',
-        {
-          params: new HttpParams().set('auth', user.token)
-        });
-
-
-      }))
+    return this.http.get<Recipe[]>('https://udemy-project-9f32b.firebaseio.com/recipes.json')
       .pipe(
         map((recipes: Array<Recipe>) => {
            return recipes.map((recipe) => {
