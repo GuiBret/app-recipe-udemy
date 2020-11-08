@@ -45,7 +45,7 @@ export class AuthComponent {
     form.reset();
   }
 
-  login() {
-
+  onHandleError() {
+    this.error = '';
   }
 }
