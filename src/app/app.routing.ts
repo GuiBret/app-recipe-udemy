@@ -11,7 +11,8 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './auth/auth.guard';
 const routes: Routes = [
 
-    {path: '', redirectTo: "recipe-list", pathMatch: 'full'},
+  {path: '', redirectTo: "/recipe-list", pathMatch: 'full'},
+  {path: 'recipe-list', loadChildren: () => import('./recipes/recipes.module').then((mod) => mod.RecipesModule)},
 ];
 
 @NgModule({
