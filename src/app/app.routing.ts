@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { RecipeListComponent } from './RecipeBook/recipe-list/recipe-list.component';
 import { ShoppingListComponent } from './ShoppingList/shopping-list/shopping-list.component';
 import { RecipeBookComponent } from './RecipeBook/recipe-book.component';
@@ -13,11 +13,13 @@ const routes: Routes = [
 
   {path: '', redirectTo: "/recipe-list", pathMatch: 'full'},
   {path: 'recipe-list', loadChildren: () => import('./recipes/recipes.module').then((mod) => mod.RecipesModule)},
+  {path: 'shopping-list', loadChildren: () => import('./ShoppingList/shoppinglist.module').then((mod) => mod.ShoppingListModule)},
+  {path: 'auth', loadChildren: () => import('./auth/auth.module').then((mod) => mod.AuthModule)},
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
     ],
     exports: [
         RouterModule
