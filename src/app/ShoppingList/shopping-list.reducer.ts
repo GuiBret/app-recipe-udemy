@@ -9,13 +9,13 @@ const initialState = {
   ]
 };
 
-export function ShoppingListReducer(state = initialState, action: Action) {
+export function ShoppingListReducer(state = initialState, action: ShoppingListActions.AddIngredientAction) {
   switch(action.type) {
     case ShoppingListActions.ADD_INGREDIENT:
 
       return {
         ...state,
-        ingredients: [...state.ingredients, action]
+        ingredients: [...state.ingredients, action.payload]
       };
     break;
   }
