@@ -17,6 +17,8 @@ export function ShoppingListReducer(state = initialState, action: ShoppingListAc
         ...state,
         ingredients: [...state.ingredients, action.payload]
       };
+    default:
+      return initialState;
     break;
   }
 
