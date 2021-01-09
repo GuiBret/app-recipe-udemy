@@ -11,11 +11,10 @@ export class ShoppingService {
 
   startedEditing = new Subject<number>();
 
-  
+
   constructor() {
     this.ingredients = [
-      new Ingredient('Tomatoes', 20),
-      new Ingredient('Apples', 10)
+
     ];
    }
 
@@ -37,8 +36,8 @@ export class ShoppingService {
     console.log(ingredients);
     this.ingredients.push(...ingredients);
     this.newIngredientList.next(this.getIngredients());
-    
-  } 
+
+  }
 
   updateIngredient(idx: number, newIngredient: Ingredient) {
     this.ingredients[idx] = newIngredient;
@@ -52,5 +51,5 @@ export class ShoppingService {
     this.newIngredientList.next(this.getIngredients());
   }
 
-  
+
 }
